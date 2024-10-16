@@ -44,8 +44,21 @@ Follow these instructions to get a copy of the project up and running locally.
    docker-compose up --build
    ```
 
-3. Access the API on `http://localhost:3000`.
+3. Run Prisma migrations to sync the database schema:
 
+   ```bash
+   docker-compose exec api npx prisma migrate deploy
+   ```
+
+4. Seed the database with initial data:
+
+   ```bash
+   docker-compose exec api npm run seed
+   ```
+
+5. Access the API on `http://localhost:3000`.
+
+6. Access the Swagger API documentation on `http://localhost:3000/api` (if Swagger is configured).
 
 ### API Endpoints
 
@@ -132,10 +145,10 @@ The database is a PostgreSQL instance that runs inside a Docker container. Prism
 
 ### Running Migrations
 
-To run migrations, use the following command:
+Sometimes migrations might not be applied automatically, and the database schema might be out of sync. To manually run migrations:
 
 ```bash
-docker-compose exec api npm run migration:run
+docker-compose exec api npx prisma migrate deploy
 ```
 
 ### Seeding the Database
@@ -145,6 +158,29 @@ To seed the database with mock data, use the following command:
 ```bash
 docker-compose exec api npm run seed
 ```
+
+### Common Issues
+
+1. **Relation Does Not Exist Error**:
+   - If you see an error like `relation "public.RoomType" does not exist`, it usually means that the database schema is not in sync with your Prisma models. Run the following commands:
+   
+   ```bash
+   docker-compose exec api npx prisma migrate dev --name init
+   ```
+
+   Then, apply the migration again:
+
+   ```bash
+   docker-compose exec api npx prisma migrate deploy
+   ```
+
+2. **Client Connection Issues**:
+   - If PostgreSQL logs show `could not receive data from client: Connection reset by peer`, it's likely a client issue. Ensure that Docker containers are properly networked and restart the services:
+   
+   ```bash
+   docker-compose down
+   docker-compose up --build
+   ```
 
 ### Environment Variables
 
