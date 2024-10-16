@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13-alpine
+    container_name: stellar_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: stellar_stay
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+
+  api:
+    build: .
+    container_name: stellar_api
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@db:5432/stellar_stay
+    ports:
+      - '3000:3000'
+    command: sh -c "npm run migration:run && npm run seed && npm run start:prod"
+    #command: sh -c "npx prisma migrate deploy && npm run seed && npm run start:prod"
+
+
+volumes:
+  db_data:
