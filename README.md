@@ -34,7 +34,7 @@ Follow these instructions to get a copy of the project up and running locally.
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/stellar-stay-api.git
+   git clone https://github.com/camilosolanoa/stellar-stay-api.git
    cd stellar-stay-api
    ```
 
