@@ -95,16 +95,7 @@ Follow these instructions to get a copy of the project up and running locally.
    Example request:
 
    ```json
-   curl -X POST "http://localhost:3000/reservations" 
-  -H "Content-Type: application/json" 
-  -d '{
-    "roomId": 1,
-    "checkInDate": "2024-10-20",
-    "checkOutDate": "2024-10-25",
-    "guests": 2,
-    "includeBreakfast": true
-  }'
-
+   curl -X POST "http://localhost:3000/reservations" -H "Content-Type: application/json" -d '{"roomId": 1,"checkInDate": "2024-10-20","checkOutDate": "2024-10-25","guests": 2,"includeBreakfast": true}'
    ```
 
 3. **Get Reservation Details:**
