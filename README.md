@@ -58,8 +58,6 @@ Follow these instructions to get a copy of the project up and running locally.
 
 5. Access the API on `http://localhost:3000`.
 
-6. Access the Swagger API documentation on `http://localhost:3000/api` (if Swagger is configured).
-
 ### API Endpoints
 
 1. **Get Available Rooms:**
@@ -78,7 +76,7 @@ Follow these instructions to get a copy of the project up and running locally.
    Example request:
 
    ```
-   GET http://localhost:3000/rooms/available?checkInDate=2024-10-20&checkOutDate=2024-10-25&guests=2&includeBreakfast=true
+   curl -X GET "http://localhost:3000/rooms/available?checkInDate=2024-10-20&checkOutDate=2024-10-25&guests=2&includeBreakfast=true"
    ```
 
 2. **Create a Reservation:**
@@ -97,14 +95,16 @@ Follow these instructions to get a copy of the project up and running locally.
    Example request:
 
    ```json
-   POST http://localhost:3000/reservations
-   {
-     "roomId": 1,
-     "checkInDate": "2024-10-20",
-     "checkOutDate": "2024-10-25",
-     "guests": 2,
-     "includeBreakfast": true
-   }
+   curl -X POST "http://localhost:3000/reservations" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "roomId": 1,
+    "checkInDate": "2024-10-20",
+    "checkOutDate": "2024-10-25",
+    "guests": 2,
+    "includeBreakfast": true
+  }'
+
    ```
 
 3. **Get Reservation Details:**
@@ -116,7 +116,7 @@ Follow these instructions to get a copy of the project up and running locally.
    Example request:
 
    ```
-   GET http://localhost:3000/reservations/1
+   curl -X GET "http://localhost:3000/reservations/1"
    ```
 
 4. **Cancel a Reservation:**
@@ -128,13 +128,13 @@ Follow these instructions to get a copy of the project up and running locally.
    Example request:
 
    ```
-   DELETE http://localhost:3000/reservations/1
+   curl -X DELETE "http://localhost:3000/reservations/1"
    ```
 
 5. **Get All Reservations:**
 
    ```
-   GET /reservations
+   curl -X GET "http://localhost:3000/reservations"
    ```
 
    This returns all reservations, categorized as past, ongoing, or future.
@@ -226,11 +226,6 @@ To stop the running Docker containers, press `Ctrl+C` in the terminal where the 
 docker-compose down
 ```
 
-## Dockerized Setup
 
-The project includes a `docker-compose.yml` file for running both the NestJS application and PostgreSQL database in containers.
-
-1. **API Service (`api`)**: The NestJS application is built and run inside this container.
-2. **Database Service (`db`)**: PostgreSQL runs inside this container, with a health check to ensure the service is up before starting the API.
 
 
